@@ -1,0 +1,144 @@
+<div class="profile-page" *ngIf="!loading && student">
+
+  <!-- Cover -->
+  <div class="cover">
+    <div class="cover-topbar">
+      <button class="icon-btn" (click)="goBack()" aria-label="Back">
+        <svg class="icon"><use href="#i-arrow-left"/></svg>
+      </button>
+      <div class="cover-title">Student Profile</div>
+      <div class="cover-actions">
+        <button class="icon-btn" (click)="gotoDashboard()" aria-label="Dashboard">
+          <svg class="icon"><use href="#i-grid"/></svg>
+        </button>
+        <button class="icon-btn" (click)="logout()" aria-label="Logout">
+          <svg class="icon"><use href="#i-log-out"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="avatar-block">
+      <div class="profile-avatar">
+        <img *ngIf="student.photo" [src]="environment.domainUrl + student.photo" alt="{{ student.firstName }} photo" />
+        <span *ngIf="!student.photo">{{ student.firstName?.[0] | uppercase }}{{ student.lastName?.[0] | uppercase }}</span>
+      </div>
+      <div class="profile-name">{{ student.firstName }} {{ student.lastName }}</div>
+      <div class="profile-meta">Roll No. {{ student.rollNo }}<span *ngIf="student.id"> · Student ID S{{ student.id }}</span></div>
+      <div class="profile-badges">
+        <span class="badge-chip">{{ student.className }} {{ student.sectionName }}</span>
+        <span class="badge-chip" *ngIf="student.gender">{{ student.gender }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick stats overlapping the cover -->
+  <div class="quick-stats-card">
+    <div class="qs-item">
+      <div class="qs-num success">{{ attendancePercentage }}%</div>
+      <div class="qs-label">Attendance</div>
+    </div>
+    <div class="qs-item">
+      <div class="qs-num">{{ presentCount }}</div>
+      <div class="qs-label">Present</div>
+    </div>
+    <div class="qs-item">
+      <div class="qs-num danger">{{ absentCount }}</div>
+      <div class="qs-label">Absent</div>
+    </div>
+  </div>
+
+  <div class="profile-body">
+
+    <!-- Quick actions -->
+    <div class="action-row">
+      <a class="action-btn" [href]="student.mobile ? 'tel:' + student.mobile : null">
+        <svg class="icon"><use href="#i-phone"/></svg><span>Call</span>
+      </a>
+      <a class="action-btn" [href]="student.email ? 'mailto:' + student.email : null">
+        <svg class="icon"><use href="#i-mail"/></svg><span>Email</span>
+      </a>
+      <button class="action-btn" type="button" (click)="markAttendance()">
+        <svg class="icon"><use href="#i-check-square"/></svg><span>Attendance</span>
+      </button>
+      <button class="action-btn" type="button" (click)="editStudent()">
+        <svg class="icon"><use href="#i-edit"/></svg><span>Edit</span>
+      </button>
+    </div>
+
+    <!-- Personal info -->
+    <div class="section-header"><h3>Personal Information</h3></div>
+    <div class="info-card">
+      <div class="info-row" *ngIf="student.dob">
+        <div class="info-icon"><svg class="icon"><use href="#i-calendar"/></svg></div>
+        <div class="info-mid"><div class="info-label">Date of Birth</div><div class="info-value">{{ student.dob | date:'d MMM y' }}</div></div>
+      </div>
+      <div class="info-row" *ngIf="student.fatherName">
+        <div class="info-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+        <div class="info-mid"><div class="info-label">Father's Name</div><div class="info-value">{{ student.fatherName }}</div></div>
+      </div>
+      <div class="info-row" *ngIf="student.motherName">
+        <div class="info-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+        <div class="info-mid"><div class="info-label">Mother's Name</div><div class="info-value">{{ student.motherName }}</div></div>
+      </div>
+    </div>
+
+    <!-- Contact info -->
+    <div class="section-header"><h3>Contact Information</h3></div>
+    <div class="info-card">
+      <div class="info-row" *ngIf="student.email">
+        <div class="info-icon"><svg class="icon"><use href="#i-mail"/></svg></div>
+        <div class="info-mid"><div class="info-label">Email</div><div class="info-value">{{ student.email }}</div></div>
+      </div>
+      <div class="info-row" *ngIf="student.mobile">
+        <div class="info-icon"><svg class="icon"><use href="#i-phone"/></svg></div>
+        <div class="info-mid"><div class="info-label">Mobile</div><div class="info-value">{{ student.mobile }}</div></div>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="section-header"><h3>Address</h3></div>
+    <div class="info-card">
+      <div class="info-row">
+        <div class="info-icon"><svg class="icon"><use href="#i-map-pin"/></svg></div>
+        <div class="info-mid">
+          <div class="info-label">Residential Address</div>
+          <div class="info-value">
+            {{ student.address }}<span *ngIf="student.city">, {{ student.city }}</span><span *ngIf="student.state">, {{ student.state }}</span><span *ngIf="student.country">, {{ student.country }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent attendance (placeholder data until a per-student attendance API exists) -->
+    <div class="section-header">
+      <h3>Recent Attendance</h3>
+      <button type="button" class="link-sm link-btn" (click)="viewAllAttendance()">View all</button>
+    </div>
+    <div class="att-list" *ngIf="!attendanceLoading && recentAttendance.length">
+      <div class="att-item" *ngFor="let entry of recentAttendance">
+        <span class="att-dot" [ngClass]="entry.status.toLowerCase().replace(' ', '-')"></span>
+        <div class="att-date">
+          {{ relativeDayLabel(entry.date) }}
+          <div class="att-day">{{ entry.date | date:'EEEE, d MMM' }}</div>
+        </div>
+        <span class="att-pill" [ngClass]="entry.status.toLowerCase()">{{ entry.status | titlecase }}</span>
+      </div>
+    </div>
+    <div class="att-loading" *ngIf="attendanceLoading">Loading attendance history...</div>
+    <div class="att-empty" *ngIf="!attendanceLoading && !recentAttendance.length">No attendance records yet.</div>
+
+  </div>
+
+  <button class="edit-fab" type="button" (click)="editStudent()" aria-label="Edit student">
+    <svg class="icon"><use href="#i-edit"/></svg>
+  </button>
+</div>
+
+<div class="profile-loading" *ngIf="loading">
+  Loading profile...
+</div>
+
+<div class="profile-empty" *ngIf="!loading && !student">
+  <p>Student not found.</p>
+  <button class="btn-primary" (click)="goBack()">Go Back</button>
+</div>

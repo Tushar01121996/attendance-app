@@ -1,0 +1,166 @@
+.page-shell {
+  padding: 18px;
+  max-width: 480px;
+  margin: 0 auto 40px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ---------- Header ---------- */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(150deg, var(--et-primary-dark), var(--et-primary) 70%);
+  border-radius: var(--et-radius-md);
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 12px 24px -14px rgba(12,89,82,0.5);
+}
+.header-mid {
+  flex: 1;
+  text-align: center;
+}
+.header-title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 16.5px;
+  margin: 0;
+  color: #fff;
+}
+.header-sub {
+  font-size: 11.5px;
+  color: #D6F0EA;
+  margin-top: 1px;
+}
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease, opacity 0.15s ease;
+
+  &:hover { background: rgba(255,255,255,0.15); }
+  &:disabled { opacity: 0.35; cursor: not-allowed; }
+  svg.icon { width: 18px; height: 18px; }
+}
+
+/* ---------- Month filter ---------- */
+.month-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--et-surface);
+  border-radius: var(--et-radius-md);
+  padding: 8px 10px;
+  box-shadow: var(--et-shadow-card);
+  margin-bottom: 16px;
+
+  .icon-btn {
+    color: var(--et-primary-dark);
+    &:hover { background: var(--et-primary-light); }
+  }
+}
+.month-label {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 14.5px;
+  color: var(--et-ink);
+}
+
+/* ---------- Summary ---------- */
+.quick-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.qs {
+  text-align: center;
+  border-radius: var(--et-radius-sm);
+  padding: 12px 6px;
+}
+.qs .qn {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+}
+.qs .ql {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+}
+.qs-present { background: var(--et-success-bg); }
+.qs-present .qn, .qs-present .ql { color: var(--et-success); }
+.qs-absent { background: var(--et-danger-bg); }
+.qs-absent .qn, .qs-absent .ql { color: var(--et-danger); }
+.qs-muted { background: var(--et-surface-alt); }
+.qs-muted .qn, .qs-muted .ql { color: var(--et-ink-muted); }
+.qs-percent { background: var(--et-primary-light); }
+.qs-percent .qn, .qs-percent .ql { color: var(--et-primary-dark); }
+
+/* ---------- Day list ---------- */
+.day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.day-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--et-surface);
+  border-radius: var(--et-radius-sm);
+  padding: 11px 13px;
+  box-shadow: var(--et-shadow-card);
+}
+.day-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.present { background: var(--et-success); }
+  &.absent { background: var(--et-danger); }
+  &.not-marked { background: var(--et-ink-muted); }
+}
+.day-mid {
+  flex: 1;
+  min-width: 0;
+}
+.day-date {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--et-ink);
+}
+.day-sub {
+  font-size: 11px;
+  color: var(--et-ink-muted);
+  margin-top: 1px;
+}
+.day-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 99px;
+  white-space: nowrap;
+
+  &.present { background: var(--et-success-bg); color: var(--et-success); }
+  &.absent { background: var(--et-danger-bg); color: var(--et-danger); }
+  &.not-marked { background: var(--et-surface-alt); color: var(--et-ink-muted); }
+}
+
+/* ---------- States ---------- */
+.state-msg {
+  text-align: center;
+  padding: 30px 10px;
+  color: var(--et-ink-muted);
+  font-size: 13px;
+}

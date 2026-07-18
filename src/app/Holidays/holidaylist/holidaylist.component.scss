@@ -1,0 +1,237 @@
+.student-list-container {
+  padding: 18px;
+  max-width: 480px;
+  margin: 0 auto;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ---------- HEADER ---------- */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(150deg, var(--et-primary-dark), var(--et-primary) 70%);
+  border-radius: var(--et-radius-md);
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 12px 24px -14px rgba(12,89,82,0.5);
+}
+.header-title {
+  flex: 1;
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  margin: 0;
+  color: #fff;
+}
+.actions { display: flex; gap: 2px; }
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover { background: rgba(255,255,255,0.15); }
+  svg.icon { width: 18px; height: 18px; }
+}
+
+/* ---------- MONTH TABS ---------- */
+.year-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+.year-tabs button {
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  background: var(--et-surface);
+  color: var(--et-ink-muted);
+  box-shadow: var(--et-shadow-card);
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+
+  &.active {
+    background: var(--et-primary);
+    color: #fff;
+    box-shadow: none;
+  }
+}
+
+/* ---------- CALENDAR ---------- */
+.cal-card {
+  background: var(--et-surface);
+  border-radius: var(--et-radius-lg);
+  padding: 16px;
+  box-shadow: var(--et-shadow-card);
+  margin-bottom: 18px;
+}
+.cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  h4 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--et-ink);
+    margin: 0;
+  }
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 99px;
+  white-space: nowrap;
+
+  &.danger { color: var(--et-danger); background: var(--et-danger-bg); }
+  &.success { color: var(--et-success); background: var(--et-success-bg); }
+  &.neutral { color: var(--et-ink-muted); background: var(--et-surface-alt); }
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  text-align: center;
+}
+.cg-day {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--et-ink-muted);
+  padding-bottom: 4px;
+}
+.cg-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--et-ink);
+  border-radius: 9px;
+
+  &.muted { color: #C9D6D3; }
+  &.holiday { background: var(--et-danger-bg); color: var(--et-danger); font-weight: 800; }
+  &.today { background: var(--et-primary); color: #fff; font-weight: 800; }
+}
+
+/* ---------- SEARCH ---------- */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--et-surface);
+  border-radius: var(--et-radius-md);
+  padding: 11px 14px;
+  box-shadow: var(--et-shadow-card);
+  margin-bottom: 16px;
+  color: var(--et-ink-muted);
+
+  svg.icon { width: 18px; height: 18px; }
+
+  input {
+    border: none;
+    outline: none;
+    font-size: 13.5px;
+    font-family: 'Inter', sans-serif;
+    flex: 1;
+    background: transparent;
+    color: var(--et-ink);
+
+    &::placeholder { color: var(--et-ink-muted); }
+  }
+}
+
+/* ---------- SECTION HEADER ---------- */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 12px;
+
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--et-ink);
+    margin: 0;
+  }
+}
+.lm-count {
+  font-size: 12px;
+  color: var(--et-ink-muted);
+  font-weight: 600;
+}
+
+/* ---------- UPCOMING HOLIDAY LIST ---------- */
+.holiday-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: var(--et-surface);
+  border-radius: var(--et-radius-md);
+  padding: 12px;
+  margin-bottom: 9px;
+  box-shadow: var(--et-shadow-card);
+}
+.date-badge {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: var(--et-primary-light);
+  color: var(--et-primary-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.db-d {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1;
+}
+.db-m {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+.hi-mid { flex: 1; min-width: 0; }
+.hi-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--et-ink);
+}
+.hi-sub {
+  font-size: 11px;
+  color: var(--et-ink-muted);
+  margin-top: 1px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px 10px;
+  color: var(--et-ink-muted);
+  font-size: 13px;
+}

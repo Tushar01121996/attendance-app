@@ -1,0 +1,192 @@
+<div class="page-container">
+  <div class="form-card">
+
+    <!-- Header -->
+    <div class="form-header">
+      <button class="icon-btn" (click)="goBack()" aria-label="Back">
+        <svg class="icon"><use href="#i-arrow-left"/></svg>
+      </button>
+      <h2 class="form-title">Student Registration</h2>
+      <div class="actions">
+        <button class="icon-btn" (click)="goToStudentList()" aria-label="Student List">
+          <svg class="icon"><use href="#i-users"/></svg>
+        </button>
+        <button class="icon-btn" (click)="logout()" aria-label="Logout">
+          <svg class="icon"><use href="#i-log-out"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="step-track">
+      <ng-container *ngFor="let step of steps; let last = last">
+        <div class="step-node" [class.done]="isStepComplete(step.id) && currentStep !== step.id" [class.active]="currentStep === step.id" (click)="goToStep(step.id)">
+          <div class="step-circle">
+            <svg class="icon" *ngIf="isStepComplete(step.id) && currentStep !== step.id"><use href="#i-check-circle"/></svg>
+            <span *ngIf="!(isStepComplete(step.id) && currentStep !== step.id)">{{ step.id }}</span>
+          </div>
+          <span class="step-label">{{ step.label }}</span>
+        </div>
+        <div class="step-line" *ngIf="!last" [class.filled]="isStepComplete(step.id)"></div>
+      </ng-container>
+    </div>
+
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+
+      <!-- Step 1: Personal -->
+      <div class="step-panel" *ngIf="currentStep === 1">
+        <h3 class="section-title">Basic Information</h3>
+        <p class="section-sub">Let's start with the student's personal details.</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>First Name <span class="req">*</span></label>
+            <input formControlName="firstName" placeholder="e.g. Aarav" [class.invalid]="firstName?.invalid && firstName?.touched" />
+          </div>
+          <div class="field">
+            <label>Last Name <span class="req">*</span></label>
+            <input formControlName="lastName" placeholder="e.g. Mehta" [class.invalid]="lastName?.invalid && lastName?.touched" />
+          </div>
+          <div class="field">
+            <label>Father's Name</label>
+            <input formControlName="fatherName" placeholder="Optional" />
+          </div>
+          <div class="field">
+            <label>Mother's Name</label>
+            <input formControlName="motherName" placeholder="Optional" />
+          </div>
+          <div class="field">
+            <label>Gender <span class="req">*</span></label>
+            <div class="pill-group">
+              <button type="button" *ngFor="let g of genders" class="pill-option" [class.selected]="gender?.value === g" (click)="studentForm.patchValue({gender: g})">{{ g }}</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <span></span>
+          <button type="button" class="btn-primary" (click)="nextStep()">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Contact -->
+      <div class="step-panel" *ngIf="currentStep === 2">
+        <h3 class="section-title">Contact Information</h3>
+        <p class="section-sub">How can we reach the student or guardian?</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>Email <span class="req">*</span></label>
+            <input formControlName="email" type="email" placeholder="name@example.com" [class.invalid]="email?.invalid && email?.touched" />
+          </div>
+          <div class="field">
+            <label>Mobile <span class="req">*</span></label>
+            <input formControlName="mobile" type="tel" placeholder="10-digit mobile number" [class.invalid]="mobile?.invalid && mobile?.touched" />
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button type="button" class="btn-ghost" (click)="prevStep()">Back</button>
+          <button type="button" class="btn-primary" (click)="nextStep()">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Academic -->
+      <div class="step-panel" *ngIf="currentStep === 3">
+        <h3 class="section-title">Academic Information</h3>
+        <p class="section-sub">Assign the student to a class and section.</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>Class <span class="req">*</span></label>
+            <select formControlName="class" (change)="onClassChange()">
+              <option [ngValue]="null">-- Select Class --</option>
+              <option *ngFor="let c of classes" [ngValue]="c.id">{{ c.className }}</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Section <span class="req">*</span></label>
+            <select formControlName="section">
+              <option [ngValue]="null">-- Select Section --</option>
+              <option *ngFor="let c of sections" [ngValue]="c.sectionId">{{ c.sectionName }}</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Roll No <span class="req">*</span></label>
+            <input formControlName="rollNo" type="number" placeholder="e.g. 14" [class.invalid]="studentForm.get('rollNo')?.invalid && studentForm.get('rollNo')?.touched" />
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button type="button" class="btn-ghost" (click)="prevStep()">Back</button>
+          <button type="button" class="btn-primary" (click)="nextStep()">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Address -->
+      <div class="step-panel" *ngIf="currentStep === 4">
+        <h3 class="section-title">Address Information</h3>
+        <p class="section-sub">Where does the student currently reside?</p>
+
+        <div class="form-grid">
+          <div class="field field--full">
+            <label>Address <span class="req">*</span></label>
+            <textarea formControlName="address" rows="2" placeholder="House no., street, locality"></textarea>
+          </div>
+          <div class="field">
+            <label>City <span class="req">*</span></label>
+            <input formControlName="city" placeholder="e.g. Agra" />
+          </div>
+          <div class="field">
+            <label>State <span class="req">*</span></label>
+            <input formControlName="state" placeholder="e.g. Uttar Pradesh" />
+          </div>
+          <div class="field">
+            <label>Country</label>
+            <input formControlName="country" placeholder="India" />
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button type="button" class="btn-ghost" (click)="prevStep()">Back</button>
+          <button type="button" class="btn-primary" (click)="nextStep()">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Identity -->
+      <div class="step-panel" *ngIf="currentStep === 5">
+        <h3 class="section-title">Identity & Photo</h3>
+        <p class="section-sub">Final step — add an ID reference and a photo.</p>
+
+        <div class="identity-layout">
+          <!-- Photo uploader -->
+          <div class="photo-upload">
+            <div class="photo-circle" [class.has-photo]="photoPreviewUrl">
+              <img *ngIf="photoPreviewUrl" [src]="photoPreviewUrl" alt="Student photo preview" />
+              <svg class="icon" *ngIf="!photoPreviewUrl"><use href="#i-user-plus"/></svg>
+            </div>
+            <label for="photo" class="photo-btn">
+              <svg class="icon"><use href="#i-plus"/></svg>
+              {{ photoPreviewUrl ? 'Change Photo' : 'Upload Photo' }}
+            </label>
+            <input type="file" id="photo" accept="image/*" (change)="onFileSelected($event)" hidden />
+          </div>
+
+          <div class="field">
+            <label>Aadhar Number</label>
+            <input formControlName="aadhar" placeholder="12-digit Aadhar number" [class.invalid]="studentForm.get('aadhar')?.invalid && studentForm.get('aadhar')?.touched" />
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button type="button" class="btn-ghost" (click)="prevStep()">Back</button>
+          <button type="submit" class="btn-primary btn-primary--wide">
+            <svg class="icon"><use href="#i-check-circle"/></svg>
+            Register Student
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="dashboard-card">
+  <header class="dashboard-header">
+    <h1 class="title">Building Name</h1>
+    <button class="settings-btn" aria-label="Settings">&#9881;</button>
+  </header>
+
+  <nav class="tab-bar">
+    <button class="tab-btn" [class.active]="activeTab === 'Efficiency'" (click)="setTab('Efficiency')">Efficiency</button>
+    <button class="tab-btn" [class.active]="activeTab === 'Quality'" (click)="setTab('Quality')">Quality</button>
+    <button class="tab-btn" [class.active]="activeTab === 'Tasks'" (click)="setTab('Tasks')">Tasks</button>
+  </nav>
+
+  <section class="dashboard-body">
+    <section class="status-voltage-row">
+      <aside class="status-legend">
+        <div><span class="dot stable"></span> STABLE</div>
+        <div><span class="dot caution"></span> CAUTION</div>
+        <div><span class="dot critical"></span> CRITICAL</div>
+      </aside>
+
+      <div class="performance-gauge">
+        <span class="gauge-label">Last 7 Days</span>
+        <strong class="gauge-score">{{ score.toFixed(2) }}</strong>
+        <svg class="gauge-svg" width="52" height="52" viewBox="0 0 52 52">
+          <circle class="gauge-bg" cx="26" cy="26" r="21"></circle>
+          <circle class="gauge-fg" cx="26" cy="26" r="21"
+           [attr.stroke-dasharray]="gaugeCircumference"
+           [attr.stroke-dashoffset]="gaugeDashOffset"></circle>
+        </svg>
+      </div>
+    </section>
+
+    <section class="voltage-bar-section">
+      <div class="voltage-label">Voltage</div>
+      <div class="voltage-bar-wrapper">
+        <div class="voltage-bar stable" [style.flexBasis.%]="barStable"></div>
+        <div class="voltage-bar caution" [style.flexBasis.%]="barCaution"></div>
+        <div class="voltage-bar critical" [style.flexBasis.%]="barCritical"></div>
+      </div>
+      <div class="voltage-bar-text">
+        <span>5%</span>
+        <span>15%</span>
+        <span>80%</span>
+      </div>
+    </section>
+
+    <section class="calendar-section">
+      <div class="calendar-days">
+        <ng-container *ngFor="let day of calendarDays">
+          <div class="calendar-day" [class.today]="day.current">
+            <span class="day-name">{{ day.label }}</span>
+            <span class="day-number">{{ day.day }}</span>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+
+    <section class="line-chart-section">
+      <canvas baseChart
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="lineChartType"
+        [legend]="lineChartLegend"></canvas>
+    </section>
+  </section>
+
+  <footer class="dashboard-footer">
+    <button class="footer-btn">BACK</button>
+    <button class="footer-btn">NEXT</button>
+  </footer>
+</div>

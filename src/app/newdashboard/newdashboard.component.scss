@@ -1,0 +1,265 @@
+.dashboard-card {
+  max-width: 400px;
+  margin: 20px auto 40px auto;
+  padding: 24px 20px;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 0 12px 50px rgba(34, 72, 171, 0.1);
+  font-family: 'Inter', sans-serif;
+  user-select: none;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 19px;
+  color: #000;
+}
+
+.settings-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #222;
+  user-select: none;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 35px;
+  margin-bottom: 12px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  color: #aaa;
+  padding-bottom: 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  user-select: none;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.tab-btn.active {
+  color: #3889ff;
+  border-bottom: 2px solid #3889ff;
+  font-weight: 700;
+}
+
+.dashboard-body {
+  background-color: #f6f7f9;
+  border-radius: 18px;
+  padding: 22px 19px 20px 19px;
+}
+
+.status-voltage-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.status-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #444;
+  padding-left: 10px;
+}
+
+.status-legend .dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.status-legend .stable {
+  background-color: #8fd348;
+}
+
+.status-legend .caution {
+  background-color: #f7c325;
+}
+
+.status-legend .critical {
+  background-color: #ed4940;
+}
+
+.performance-gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gauge-label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #858585;
+  margin-bottom: 2px;
+  user-select: none;
+}
+
+.gauge-score {
+  font-size: 32px;
+  font-weight: 800;
+  color: #426cff;
+  line-height: 32px;
+  margin-bottom: 8px;
+  user-select: none;
+}
+
+.gauge-svg {
+  transform: rotate(-90deg);
+}
+
+.gauge-bg {
+  fill: none;
+  stroke: #e6e6e6;
+  stroke-width: 5;
+}
+
+.gauge-fg {
+  fill: none;
+  stroke: #338bff;
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.voltage-bar-section {
+  margin-bottom: 25px;
+}
+
+.voltage-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #222;
+  padding-left: 10px;
+  margin-bottom: 6px;
+  user-select: none;
+}
+
+.voltage-bar-wrapper {
+  height: 13px;
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 0 8px;
+  background-color: #e6e7e9;
+  user-select: none;
+}
+
+.voltage-bar {
+  height: 100%;
+}
+
+.voltage-bar.stable {
+  background-color: #8fd348;
+}
+
+.voltage-bar.caution {
+  background-color: #f7c325;
+}
+
+.voltage-bar.critical {
+  background-color: #ed4940;
+}
+
+.voltage-bar-text {
+  font-size: 11px;
+  color: #888;
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 20px 0 20px;
+  user-select: none;
+}
+
+.calendar-section {
+  margin-bottom: 14px;
+}
+
+.calendar-days {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 11px;
+  user-select: none;
+}
+
+.calendar-day {
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  padding: 0 1.5px;
+  min-width: 41px;
+}
+
+.calendar-day.today .day-number {
+  background-color: #3889ff;
+  color: white;
+  font-weight: 800;
+  box-shadow: 0 7px 10px rgba(50, 101, 255, 0.11);
+  border-radius: 12px;
+  padding: 9px 15px 8px 15px;
+  user-select: none;
+}
+
+.day-name {
+  font-weight: 600;
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 4px;
+}
+
+.day-number {
+  font-weight: 600;
+  font-size: 16px;
+  color: #222;
+  padding: 9px 15px 8px 15px;
+  border-radius: 12px;
+  user-select: none;
+}
+
+.line-chart-section {
+  min-height: 64px;
+  padding: 0 11px;
+}
+
+.dashboard-footer {
+  margin-top: 22px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.footer-btn {
+  font-weight: 700;
+  font-size: 15px;
+  color: #358cff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 35px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.footer-btn:hover {
+  background-color: #d7e2fc;
+}

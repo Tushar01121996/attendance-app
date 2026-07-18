@@ -1,0 +1,305 @@
+.page-container {
+  max-width: 640px;
+  margin: 24px auto 48px;
+  padding: 0 20px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.form-card {
+  background: var(--et-surface);
+  border-radius: var(--et-radius-lg);
+  box-shadow: var(--et-shadow-card);
+  overflow: hidden;
+}
+
+/* ---------- Header ---------- */
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(150deg, var(--et-primary-dark), var(--et-primary) 70%);
+  padding: 16px 16px;
+}
+.form-title {
+  flex: 1;
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  margin: 0;
+  color: #fff;
+}
+.actions { display: flex; gap: 2px; }
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover { background: rgba(255,255,255,0.15); }
+  svg.icon { width: 18px; height: 18px; }
+}
+
+/* ---------- Step track ---------- */
+.step-track {
+  display: flex;
+  align-items: flex-start;
+  padding: 24px 22px 8px;
+  background: var(--et-mint-50);
+}
+.step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 64px;
+}
+.step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--et-surface);
+  border: 2px solid var(--et-line);
+  color: var(--et-ink-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  font-weight: 800;
+  font-family: 'Manrope', sans-serif;
+  transition: all 0.2s ease;
+
+  svg.icon { width: 15px; height: 15px; }
+}
+.step-node.active .step-circle {
+  background: var(--et-primary);
+  border-color: var(--et-primary);
+  color: #fff;
+  box-shadow: 0 0 0 4px var(--et-primary-light);
+}
+.step-node.done .step-circle {
+  background: var(--et-success);
+  border-color: var(--et-success);
+  color: #fff;
+}
+.step-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--et-ink-muted);
+  text-align: center;
+}
+.step-node.active .step-label { color: var(--et-primary-dark); }
+.step-node.done .step-label { color: var(--et-success); }
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--et-line);
+  margin-top: 15px;
+  border-radius: 2px;
+
+  &.filled { background: var(--et-success); }
+}
+
+/* ---------- Step panel ---------- */
+.step-panel {
+  padding: 26px 24px 24px;
+  animation: fadeIn 0.25s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--et-ink);
+  margin: 0 0 4px;
+}
+.section-sub {
+  font-size: 13px;
+  color: var(--et-ink-muted);
+  margin: 0 0 22px;
+}
+
+/* ---------- Fields ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 14px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field--full { grid-column: 1 / -1; }
+
+.field label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--et-ink-soft);
+}
+.req { color: var(--et-danger); }
+
+.field input,
+.field select,
+.field textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  color: var(--et-ink);
+  background: var(--et-surface-alt);
+  border: 1.5px solid var(--et-line);
+  border-radius: 11px;
+  padding: 11px 13px;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder { color: #A9BCB8; }
+
+  &:focus {
+    border-color: var(--et-primary);
+    background: var(--et-surface);
+  }
+
+  &.invalid {
+    border-color: var(--et-danger);
+    background: var(--et-danger-bg);
+  }
+}
+.field textarea { resize: vertical; min-height: 60px; }
+.field select { cursor: pointer; }
+
+/* Gender pill group */
+.pill-group {
+  display: flex;
+  gap: 8px;
+}
+.pill-option {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 11px;
+  border: 1.5px solid var(--et-line);
+  background: var(--et-surface-alt);
+  color: var(--et-ink-soft);
+  font-weight: 700;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &.selected {
+    background: var(--et-primary);
+    border-color: var(--et-primary);
+    color: #fff;
+  }
+}
+
+/* ---------- Identity step ---------- */
+.identity-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.photo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0 6px;
+}
+.photo-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--et-primary-light);
+  color: var(--et-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2.5px dashed var(--et-primary);
+
+  svg.icon { width: 34px; height: 34px; }
+
+  &.has-photo { border-style: solid; }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.photo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--et-primary);
+  background: var(--et-primary-light);
+  padding: 8px 16px;
+  border-radius: 99px;
+  cursor: pointer;
+
+  svg.icon { width: 14px; height: 14px; }
+}
+
+/* ---------- Buttons ---------- */
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--et-primary);
+  color: #fff;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px -10px rgba(18,120,111,0.6);
+  transition: opacity 0.15s ease;
+
+  &:hover { opacity: 0.92; }
+  svg.icon { width: 17px; height: 17px; }
+}
+.btn-primary--wide { padding: 12px 30px; }
+
+.btn-ghost {
+  background: transparent;
+  border: none;
+  color: var(--et-ink-muted);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 10px;
+  cursor: pointer;
+
+  &:hover { color: var(--et-ink); }
+}
+
+@media (max-width: 560px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .step-label { display: none; }
+  .step-track { padding: 18px 14px 8px; }
+}

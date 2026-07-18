@@ -1,0 +1,80 @@
+<div class="student-list-container">
+  <div class="header-row">
+    <button class="icon-btn" (click)="goBack()" aria-label="Back">
+      <svg class="icon"><use href="#i-arrow-left"/></svg>
+    </button>
+    <h2 class="header-title">Holidays</h2>
+
+    <div class="actions">
+      <button class="icon-btn" (click)="addNewStudent()" aria-label="Add Student">
+        <svg class="icon"><use href="#i-user-plus"/></svg>
+      </button>
+      <button class="icon-btn" (click)="gotoDashboard()" aria-label="Go To Dashboard">
+        <svg class="icon"><use href="#i-grid"/></svg>
+      </button>
+      <button class="icon-btn" (click)="markAttendance()" aria-label="Mark Attendance">
+        <svg class="icon"><use href="#i-check-square"/></svg>
+      </button>
+      <button class="icon-btn" (click)="logout()" aria-label="Logout">
+        <svg class="icon"><use href="#i-log-out"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Month tabs -->
+  <div class="year-tabs">
+    <button
+      *ngFor="let tab of monthTabs"
+      [class.active]="isSameMonth(tab.date, selectedMonth)"
+      (click)="setMonth(tab.date)"
+    >{{ tab.label }}</button>
+  </div>
+
+  <!-- Mini calendar -->
+  <div class="cal-card">
+    <div class="cal-head">
+      <h4>{{ monthLabel }}</h4>
+      <span class="pill" [ngClass]="monthHolidayCount ? 'danger' : 'neutral'">{{ monthHolidayCount }} holiday{{ monthHolidayCount === 1 ? '' : 's' }}</span>
+    </div>
+    <div class="cal-grid">
+      <div class="cg-day" *ngFor="let d of weekDayLabels">{{ d }}</div>
+      <div
+        class="cg-cell"
+        *ngFor="let cell of calendarCells"
+        [class.muted]="!cell.inMonth"
+        [class.holiday]="cell.isHoliday"
+        [class.today]="cell.isToday"
+      >{{ cell.date }}</div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <svg class="icon"><use href="#i-search"/></svg>
+    <input type="text" placeholder="Search holidays..." (keyup)="applyFilter($event)" />
+  </div>
+
+  <div class="section-header">
+    <h3>Upcoming Holidays</h3>
+    <span class="lm-count">{{ upcomingHolidays.length }} total</span>
+  </div>
+
+  <!-- Upcoming holiday list -->
+  <div class="holiday-item" *ngFor="let holiday of upcomingHolidays">
+    <div class="date-badge">
+      <div class="db-d">{{ holiday.holidayDate | date:'dd' }}</div>
+      <div class="db-m">{{ holiday.holidayDate | date:'MMM' }}</div>
+    </div>
+    <div class="hi-mid">
+      <div class="hi-name">{{ holiday.description }}</div>
+      <div class="hi-sub">{{ holiday.holidayDate | date:'EEEE, MMM d, y' }}</div>
+    </div>
+    <span class="pill" [ngClass]="holiday.isActive ? 'success' : 'neutral'">
+      {{ holiday.isActive ? 'Active' : 'Inactive' }}
+    </span>
+  </div>
+
+  <div class="empty-state" *ngIf="!upcomingHolidays.length">
+    No upcoming holidays found.
+  </div>
+</div>

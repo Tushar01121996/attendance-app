@@ -1,0 +1,63 @@
+<div class="page-shell">
+
+  <!-- Header -->
+  <div class="header-row">
+    <button class="icon-btn" (click)="goBack()" aria-label="Back">
+      <svg class="icon"><use href="#i-arrow-left"/></svg>
+    </button>
+    <div class="header-mid">
+      <h2 class="header-title">Attendance History</h2>
+      <div class="header-sub" *ngIf="studentName">{{ studentName }}</div>
+    </div>
+    <button class="icon-btn" (click)="logout()" aria-label="Logout">
+      <svg class="icon"><use href="#i-log-out"/></svg>
+    </button>
+  </div>
+
+  <!-- Month filter -->
+  <div class="month-filter">
+    <button class="icon-btn" (click)="prevMonth()" aria-label="Previous month">
+      <svg class="icon"><use href="#i-chevron-left"/></svg>
+    </button>
+    <div class="month-label">{{ monthLabel }}</div>
+    <button class="icon-btn" (click)="nextMonth()" [disabled]="isCurrentMonth" aria-label="Next month">
+      <svg class="icon"><use href="#i-chevron-right"/></svg>
+    </button>
+  </div>
+
+  <!-- Summary -->
+  <div class="quick-stats" *ngIf="!loading">
+    <div class="qs qs-present">
+      <div class="qn">{{ presentCount }}</div>
+      <div class="ql">PRESENT</div>
+    </div>
+    <div class="qs qs-absent">
+      <div class="qn">{{ absentCount }}</div>
+      <div class="ql">ABSENT</div>
+    </div>
+    <div class="qs qs-muted">
+      <div class="qn">{{ notMarkedCount }}</div>
+      <div class="ql">NOT MARKED</div>
+    </div>
+    <div class="qs qs-percent">
+      <div class="qn">{{ attendancePercentage }}%</div>
+      <div class="ql">ATTENDANCE</div>
+    </div>
+  </div>
+
+  <!-- Day list -->
+  <div class="day-list" *ngIf="!loading && rows.length">
+    <div class="day-item" *ngFor="let row of rows">
+      <span class="day-dot" [ngClass]="statusClass(row.status)"></span>
+      <div class="day-mid">
+        <div class="day-date">{{ row.date | date:'EEEE' }}</div>
+        <div class="day-sub">{{ row.date | date:'d MMM y' }}</div>
+      </div>
+      <span class="day-pill" [ngClass]="statusClass(row.status)">{{ row.status }}</span>
+    </div>
+  </div>
+
+  <div class="state-msg" *ngIf="loading">Loading attendance...</div>
+  <div class="state-msg" *ngIf="!loading && !rows.length">No attendance records for this month.</div>
+
+</div>

@@ -1,1 +1,155 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ---- EduTrack design tokens ---- */
+  --et-canvas: #0A4744;
+  --et-canvas-deep: #073735;
+  --et-primary: #12786F;
+  --et-primary-dark: #0C5952;
+  --et-primary-light: #E4F3F0;
+  --et-mint-50: #F2FAF8;
+  --et-surface: #FFFFFF;
+  --et-surface-alt: #F5F9F8;
+  --et-ink: #17302D;
+  --et-ink-soft: #3E5854;
+  --et-ink-muted: #8AA09C;
+  --et-line: #E7EFED;
+  --et-success: #2FA97A;
+  --et-success-bg: #E6F6EF;
+  --et-warning: #E8A93A;
+  --et-warning-bg: #FCF2DF;
+  --et-danger: #E1615D;
+  --et-danger-bg: #FBEAEA;
+  --et-info: #4E8FE0;
+  --et-info-bg: #EAF1FC;
+  --et-radius-lg: 20px;
+  --et-radius-md: 14px;
+  --et-radius-sm: 10px;
+  --et-shadow-card: 0 1px 2px rgba(15,56,52,0.06), 0 8px 20px -6px rgba(15,56,52,0.10);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Roboto, "Helvetica Neue", sans-serif;
+  background: var(--et-surface-alt);
+  color: var(--et-ink);
+}
+
+h1, h2, h3, h4, .et-display {
+  font-family: 'Manrope', 'Inter', sans-serif;
+}
+
+/* ---- App-wide Material re-tint: teal instead of default indigo/pink ---- */
+.mat-mdc-icon-button.mat-primary,
+.mat-mdc-icon-button.mat-accent {
+  --mdc-icon-button-icon-color: var(--et-primary);
+  color: var(--et-primary) !important;
+}
+.mat-mdc-icon-button.mat-warn {
+  --mdc-icon-button-icon-color: var(--et-ink-muted);
+  color: var(--et-ink-muted) !important;
+}
+button.mat-mdc-raised-button.mat-primary,
+button.mat-mdc-unelevated-button.mat-primary,
+a.mat-mdc-raised-button.mat-primary,
+a.mat-mdc-unelevated-button.mat-primary {
+  --mdc-filled-button-container-color: var(--et-primary);
+  --mdc-filled-button-label-text-color: #fff;
+  background-color: var(--et-primary) !important;
+  color: #fff !important;
+}
+.mat-mdc-outlined-button.mat-primary {
+  --mdc-outlined-button-label-text-color: var(--et-primary);
+  color: var(--et-primary) !important;
+  border-color: var(--et-primary) !important;
+}
+.mat-mdc-outlined-button.mat-accent {
+  --mdc-outlined-button-label-text-color: var(--et-danger);
+  color: var(--et-danger) !important;
+  border-color: var(--et-danger) !important;
+}
+.mat-mdc-slide-toggle.mat-accent {
+  --mdc-switch-selected-handle-color: var(--et-success);
+  --mdc-switch-selected-track-color: var(--et-primary-light);
+  --mdc-switch-selected-focus-handle-color: var(--et-success);
+  --mdc-switch-selected-hover-handle-color: var(--et-success);
+  --mdc-switch-selected-pressed-handle-color: var(--et-success);
+}
+button.mat-mdc-raised-button,
+button.mat-mdc-unelevated-button,
+a.mat-mdc-raised-button {
+  border-radius: 10px !important;
+}
+
+/* ---- shared icon sprite utility (used across restyled screens) ---- */
+svg.icon {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ---- Angular Material Compact Styles ---- */
+
+/* Compact form field height */
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-container-height: 36px !important;
+  --mdc-outlined-text-field-outline-width: 1px;
+  --mdc-outlined-text-field-outline-shape: 6px;
+  font-size: 13px; /* default smaller font */
+}
+
+/* Wrapper (container around input) */
+.mat-mdc-text-field-wrapper {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 8px !important;
+  align-items: center !important;
+}
+
+/* Input area (without breaking floating label) */
+.mat-mdc-form-field-infix {
+  padding: 0.25rem 0 !important;
+  min-height: 36px !important;
+}
+
+/* Input text itself */
+.mat-mdc-input-element {
+  font-size: 13px !important;
+  padding: 0 8px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+}
+
+/* Compact datepicker icon */
+.mat-datepicker-toggle .mat-mdc-icon-button {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+/* Compact buttons */
+button.mat-mdc-button,
+button.mat-mdc-raised-button,
+button.mat-mdc-outlined-button {
+  height: 36px !important;
+  min-height: 36px !important;
+  font-size: 14px !important;
+  padding: 0 12px !important;
+  line-height: 36px !important;
+}
+
+/* Labels (don’t override position, just size) */
+.mat-mdc-floating-label {
+  font-size: 13px !important;
+ 
+}

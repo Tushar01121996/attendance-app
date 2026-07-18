@@ -1,0 +1,58 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2 class="title">Hello!</h2>
+    <p class="subtitle">Login to continue</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Username -->
+      <div class="input-group">
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="User name"
+          class="input-field"
+        />
+        <mat-icon class="input-icon">person</mat-icon>
+      </div>
+      <div
+        class="error"
+        *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid"
+      >
+        Username is required
+      </div>
+
+      <!-- Password -->
+      <div class="input-group">
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          class="input-field"
+        />
+        <mat-icon class="input-icon">lock</mat-icon>
+      </div>
+      <div
+        class="error"
+        *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+      >
+        Password is required
+      </div>
+
+      <!-- Remember me -->
+      <div class="options-row">
+        <mat-checkbox formControlName="rememberMe">Keep me log in</mat-checkbox>
+      </div>
+
+      <!-- Login Button -->
+      <button type="submit" class="login-btn">Login</button>
+
+      <!-- Forgot Password -->
+      <a class="forgot-link" (click)="forgotPassword()">Forgot password ?</a>
+    </form>
+
+    <!-- Footer -->
+    <p class="footer-text">
+      already have an account ? <a href="#">Log in</a>
+    </p>
+  </div>
+</div>

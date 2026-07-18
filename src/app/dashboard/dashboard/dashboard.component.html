@@ -1,0 +1,102 @@
+<div class="dashboard-shell">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-greet">
+      <div class="greeting-sub">Good morning,</div>
+      <div class="greeting-name">{{ teacherName }}</div>
+    </div>
+    <div class="icon-btn">
+      <svg class="icon"><use href="#i-bell"/></svg>
+      <span class="dot-badge"></span>
+    </div>
+  </div>
+
+  <!-- Date strip -->
+  <div class="date-strip">
+    <div class="date-chip" *ngFor="let d of weekDays" [class.active]="d.isToday">
+      <span class="d">{{ d.label }}</span>
+      <span class="n">{{ d.date }}</span>
+    </div>
+  </div>
+
+  <!-- Hero ring gauge -->
+  <div class="hero-card">
+    <div class="hc-text">
+      <div class="hc-label">Today's Attendance</div>
+      <h2>{{ attendancePercentage }}%</h2>
+      <div class="hc-sub">{{ presentStudents }} of {{ totalStudents }} students present</div>
+      <div class="hc-legend">
+        <span><i class="dot dot-present"></i>Present</span>
+        <span><i class="dot dot-absent"></i>Absent</span>
+      </div>
+    </div>
+    <div class="ring-wrap">
+      <svg viewBox="0 0 100 100" width="98" height="98">
+        <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="9"/>
+        <circle cx="50" cy="50" r="42" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round"
+          stroke-dasharray="263.9" [attr.stroke-dashoffset]="ringDashOffset"/>
+      </svg>
+      <div class="ring-pct">{{ attendancePercentage }}%</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="sc-icon sc-icon--info"><svg class="icon"><use href="#i-users"/></svg></div>
+      <div class="sc-num">{{ totalStudents }}</div>
+      <div class="sc-label">Total Students</div>
+    </div>
+    <div class="stat-card">
+      <div class="sc-icon sc-icon--success"><svg class="icon"><use href="#i-check-circle"/></svg></div>
+      <div class="sc-num">{{ presentStudents }}</div>
+      <div class="sc-label">Present Today</div>
+    </div>
+    <div class="stat-card">
+      <div class="sc-icon sc-icon--danger"><svg class="icon"><use href="#i-x-circle"/></svg></div>
+      <div class="sc-num">{{ absentStudents }}</div>
+      <div class="sc-label">Absent Today</div>
+    </div>
+  </div>
+
+  <!-- Quick actions -->
+  <div class="section-header"><h3>Quick Actions</h3></div>
+  <div class="quick-actions">
+    <a routerLink="/students/register" class="qa-card">
+      <svg class="icon"><use href="#i-user-plus"/></svg>
+      <span>Register</span>
+    </a>
+    <a routerLink="/students/list" class="qa-card">
+      <svg class="icon"><use href="#i-users"/></svg>
+      <span>Students</span>
+    </a>
+    <a routerLink="/students/attendance" class="qa-card">
+      <svg class="icon"><use href="#i-check-square"/></svg>
+      <span>Attendance</span>
+    </a>
+    <a routerLink="/holidaylist" class="qa-card">
+      <svg class="icon"><use href="#i-calendar"/></svg>
+      <span>Holidays</span>
+    </a>
+  </div>
+
+  <!-- Recent requests list -->
+  <div class="section-header">
+    <h3>Recent Activity</h3>
+    <a routerLink="/holidaylist" class="see-all">View all</a>
+  </div>
+
+  <div class="req-list">
+    <div class="req-item" *ngFor="let r of requests">
+      <span class="avatar-ring" [ngClass]="r.status.toLowerCase()">
+        <img class="req-avatar" [src]="r.avatar" alt="{{r.name}} avatar" />
+      </span>
+      <div class="req-mid">
+        <div class="req-name">{{ r.name }}</div>
+        <div class="req-date">{{ r.date }}</div>
+      </div>
+      <span class="req-status" [ngClass]="r.status.toLowerCase()">{{ r.status }}</span>
+    </div>
+  </div>
+</div>

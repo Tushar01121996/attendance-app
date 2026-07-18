@@ -1,0 +1,63 @@
+<div class="student-list-container">
+  <div class="header-row">
+    <button class="icon-btn" (click)="goBack()" aria-label="Back">
+      <svg class="icon"><use href="#i-arrow-left"/></svg>
+    </button>
+    <h2 class="header-title">Student List</h2>
+
+    <div class="actions">
+      <button class="icon-btn" (click)="addNewStudent()" aria-label="Add Student">
+        <svg class="icon"><use href="#i-user-plus"/></svg>
+      </button>
+      <button class="icon-btn" (click)="gotoDashboard()" aria-label="Go To Dashboard">
+        <svg class="icon"><use href="#i-grid"/></svg>
+      </button>
+      <button class="icon-btn" (click)="markAttendance()" aria-label="Mark Attendance">
+        <svg class="icon"><use href="#i-check-square"/></svg>
+      </button>
+      <button class="icon-btn" (click)="logout()" aria-label="Logout">
+        <svg class="icon"><use href="#i-log-out"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <svg class="icon"><use href="#i-search"/></svg>
+    <input type="text" placeholder="Enter name, email, class..." (keyup)="applyFilter($event)" />
+  </div>
+
+  <div class="list-meta">
+    <span class="lm-count">{{ dataSource.filteredData.length }} students</span>
+  </div>
+
+  <!-- Student Cards -->
+  <div class="student-card" *ngFor="let student of dataSource.filteredData" (click)="viewProfile(student)">
+    <div class="student-item">
+      <!-- Avatar -->
+      <span class="avatar-ring">
+        <div class="avatar">
+          <img *ngIf="student.photo" [src]="environment.domainUrl + student.photo" alt="Photo" />
+          <span *ngIf="!student.photo">
+            {{ student.firstName?.[0] | uppercase }}
+          </span>
+        </div>
+      </span>
+
+      <!-- Info -->
+      <div class="student-info">
+        <div class="name">{{ student.firstName }} {{ student.lastName }}</div>
+        <div class="details">
+          {{ student.email }} • {{ student.mobile }}
+        </div>
+        <div class="class">Class: {{ student.className }} {{ student.sectionName }}</div>
+      </div>
+
+      <!-- Status Badge -->
+      <div class="status" [ngClass]="student.gender?.toLowerCase() ?? 'unknown'">
+        {{ student.gender }}
+      </div>
+      <svg class="icon chevron"><use href="#i-chevron-right"/></svg>
+    </div>
+  </div>
+</div>

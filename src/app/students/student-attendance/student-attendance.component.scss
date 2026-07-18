@@ -1,0 +1,296 @@
+.student-list-container {
+  padding: 18px;
+  max-width: 760px;
+  margin: 0 auto;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ---------- HEADER ---------- */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(150deg, var(--et-primary-dark), var(--et-primary) 70%);
+  border-radius: var(--et-radius-md);
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 12px 24px -14px rgba(12,89,82,0.5);
+}
+.header-title {
+  flex: 1;
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  margin: 0;
+  color: #fff;
+}
+.actions {
+  display: flex;
+  gap: 2px;
+}
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover { background: rgba(255,255,255,0.15); }
+  svg.icon { width: 18px; height: 18px; }
+}
+
+/* ---------- FILTERS ---------- */
+.filters-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.date-pill {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--et-surface);
+  border-radius: var(--et-radius-md);
+  padding: 8px 13px;
+  box-shadow: var(--et-shadow-card);
+
+  .lbl {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--et-ink-muted);
+    margin-bottom: 2px;
+  }
+
+  .date-input {
+    border: none;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--et-ink);
+    background: transparent;
+    width: 132px;
+  }
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--et-surface);
+  border-radius: var(--et-radius-md);
+  padding: 11px 14px;
+  box-shadow: var(--et-shadow-card);
+  color: var(--et-ink-muted);
+
+  svg.icon { width: 18px; height: 18px; }
+
+  input {
+    border: none;
+    outline: none;
+    font-size: 13.5px;
+    font-family: 'Inter', sans-serif;
+    flex: 1;
+    background: transparent;
+    color: var(--et-ink);
+
+    &::placeholder { color: var(--et-ink-muted); }
+  }
+}
+.flex-grow { flex: 1; }
+
+/* ---------- QUICK STATS ---------- */
+.quick-stats {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+.qs {
+  flex: 1;
+  text-align: center;
+  border-radius: var(--et-radius-sm);
+  padding: 10px 6px;
+}
+.qs-present { background: var(--et-success-bg); }
+.qs-absent { background: var(--et-danger-bg); }
+.qs .qn {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+}
+.qs-present .qn, .qs-present .ql { color: var(--et-success); }
+.qs-absent .qn, .qs-absent .ql { color: var(--et-danger); }
+.qs .ql {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ---------- BULK TOGGLE ---------- */
+.bulk-toggle {
+  display: flex;
+  gap: 10px;
+  margin: 6px 0 16px;
+}
+.bulk-btn {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  border-radius: 10px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  background: var(--et-surface);
+  border: 1.5px solid var(--et-line);
+  transition: background 0.15s ease;
+
+  svg.icon { width: 17px; height: 17px; }
+}
+.bulk-btn--present {
+  color: var(--et-success);
+  border-color: var(--et-success);
+  &:hover { background: var(--et-success-bg); }
+}
+.bulk-btn--absent {
+  color: var(--et-danger);
+  border-color: var(--et-danger);
+  &:hover { background: var(--et-danger-bg); }
+}
+
+/* ---------- STUDENT CARD ---------- */
+.student-card {
+  margin-bottom: 10px;
+  border-radius: var(--et-radius-md);
+  box-shadow: var(--et-shadow-card);
+  border: 1px solid var(--et-line);
+  background: var(--et-surface);
+  padding: 4px 6px;
+}
+.student-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 6px;
+}
+
+/* Avatar ring reflects live present/absent status */
+.avatar-ring {
+  flex-shrink: 0;
+  display: inline-flex;
+  padding: 2.5px;
+  border-radius: 50%;
+  background: var(--et-line);
+  transition: background 0.2s ease;
+}
+.avatar-ring.present { background: var(--et-success); }
+.avatar-ring.absent { background: var(--et-danger); }
+
+.avatar {
+  background: var(--et-primary-dark);
+  color: #fff;
+  font-weight: 700;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border: 2.5px solid #fff;
+  overflow: hidden;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Student Info */
+.student-info {
+  flex: 1;
+  min-width: 0;
+}
+.student-info .name {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--et-ink);
+}
+.student-info .details {
+  font-size: 12px;
+  color: var(--et-ink-muted);
+}
+
+/* ---------- SEGMENTED P/A TOGGLE ---------- */
+.segmented {
+  display: flex;
+  gap: 4px;
+  background: var(--et-surface-alt);
+  padding: 3px;
+  border-radius: 11px;
+  flex-shrink: 0;
+}
+.segmented button {
+  width: 30px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--et-ink-muted);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.segmented button.sel-p { background: var(--et-success); color: #fff; }
+.segmented button.sel-a { background: var(--et-danger); color: #fff; }
+
+/* ---------- HOLIDAY STATE ---------- */
+.holiday-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  width: 100%;
+}
+.holiday-card {
+  padding: 32px;
+  text-align: center;
+  background: var(--et-primary-light);
+  border-radius: var(--et-radius-lg);
+  box-shadow: var(--et-shadow-card);
+}
+.holiday-icon-circle {
+  background: var(--et-primary);
+  border-radius: 50%;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.holiday-icon {
+  color: #fff;
+  width: 38px;
+  height: 38px;
+}
+.holiday-message {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--et-primary-dark);
+}
