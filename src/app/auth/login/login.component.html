@@ -1,58 +1,73 @@
-<div class="login-container">
-  <div class="login-card">
-    <h2 class="title">Hello!</h2>
-    <p class="subtitle">Login to continue</p>
+<div class="auth-page">
+  <div class="ring-deco r1"></div>
+  <div class="ring-deco r2"></div>
+
+  <div class="auth-card">
+    <div class="brand">
+      <div class="brand-icon"><svg class="icon"><use href="#i-check-square"/></svg></div>
+      <div class="brand-name">EduTrack</div>
+    </div>
+
+    <h2 class="title">Welcome Back</h2>
+    <p class="subtitle">Login to continue to your dashboard</p>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <!-- Username -->
-      <div class="input-group">
-        <input
-          type="text"
-          formControlName="username"
-          placeholder="User name"
-          class="input-field"
-        />
-        <mat-icon class="input-icon">person</mat-icon>
-      </div>
-      <div
-        class="error"
-        *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid"
-      >
-        Username is required
+      <div class="field">
+        <label>Username</label>
+        <div class="input-group">
+          <svg class="icon input-icon"><use href="#i-user"/></svg>
+          <input
+            type="text"
+            formControlName="username"
+            placeholder="Enter your username"
+            class="input-field"
+            [class.invalid]="loginForm.get('username')?.touched && loginForm.get('username')?.invalid"
+          />
+        </div>
+        <div class="error" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid">
+          Username is required
+        </div>
       </div>
 
       <!-- Password -->
-      <div class="input-group">
-        <input
-          type="password"
-          formControlName="password"
-          placeholder="Password"
-          class="input-field"
-        />
-        <mat-icon class="input-icon">lock</mat-icon>
-      </div>
-      <div
-        class="error"
-        *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
-      >
-        Password is required
+      <div class="field">
+        <label>Password</label>
+        <div class="input-group">
+          <svg class="icon input-icon"><use href="#i-lock"/></svg>
+          <input
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Enter your password"
+            class="input-field input-field--with-toggle"
+            [class.invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+          />
+          <button type="button" class="toggle-visibility" (click)="hidePassword = !hidePassword" aria-label="Toggle password visibility">
+            <svg class="icon"><use [attr.href]="hidePassword ? '#i-eye' : '#i-eye-off'"/></svg>
+          </button>
+        </div>
+        <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          Password is required
+        </div>
       </div>
 
-      <!-- Remember me -->
+      <!-- Remember me + Forgot password -->
       <div class="options-row">
-        <mat-checkbox formControlName="rememberMe">Keep me log in</mat-checkbox>
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="rememberMe" />
+          <span class="checkbox-box"><svg class="icon"><use href="#i-check-circle"/></svg></span>
+          Keep me logged in
+        </label>
+        <a class="forgot-link" (click)="forgotPassword()">Forgot password?</a>
       </div>
 
       <!-- Login Button -->
-      <button type="submit" class="login-btn">Login</button>
-
-      <!-- Forgot Password -->
-      <a class="forgot-link" (click)="forgotPassword()">Forgot password ?</a>
+      <button type="submit" class="submit-btn">Login</button>
     </form>
 
     <!-- Footer -->
     <p class="footer-text">
-      already have an account ? <a href="#">Log in</a>
+      already have an account? <a href="#">Log in</a>
     </p>
   </div>
 </div>

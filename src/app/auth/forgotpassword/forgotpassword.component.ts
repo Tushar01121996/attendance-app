@@ -2,13 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
-import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-forgotpassword',
@@ -16,12 +11,7 @@ import { MatIcon } from '@angular/material/icon';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatCardModule,
-    MatIcon
+    MatSnackBarModule
   ],
   templateUrl: './forgotpassword.component.html',
   styleUrl: './forgotpassword.component.scss'
