@@ -82,7 +82,7 @@
         <!-- Avatar -->
         <span class="avatar-ring" [ngClass]="student.attendanceStatus ? 'present' : 'absent'">
           <div class="avatar">
-            <img *ngIf="student.photo" [src]="environment.domainUrl + student.photo" alt="Photo" />
+            <img *ngIf="student.photo" [src]="environment.domainUrl + student.photo" alt="Photo" loading="lazy"  />
             <span *ngIf="!student.photo">{{ student.firstName?.[0] | uppercase }}</span>
           </div>
         </span>

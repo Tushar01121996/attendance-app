@@ -19,7 +19,7 @@
 
     <div class="avatar-block">
       <div class="profile-avatar">
-        <img *ngIf="student.photo" [src]="environment.domainUrl + student.photo" alt="{{ student.firstName }} photo" />
+        <img *ngIf="student.photo" [src]="environment.domainUrl + student.photo" alt="{{ student.firstName }} photo" loading="lazy" />
         <span *ngIf="!student.photo">{{ student.firstName?.[0] | uppercase }}{{ student.lastName?.[0] | uppercase }}</span>
       </div>
       <div class="profile-name">{{ student.firstName }} {{ student.lastName }}</div>
