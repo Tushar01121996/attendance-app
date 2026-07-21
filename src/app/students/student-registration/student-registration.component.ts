@@ -3,9 +3,10 @@ import { CommonModule, Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { StudentService } from '../student.service';
 import { Student } from '../model/student';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Class, Section } from '../model/class';
 import { AuthService } from '../../auth/auth.service';
+import { environment } from '../../../environment/environment';
 
 
 @Component({
@@ -39,13 +40,19 @@ export class StudentRegistrationComponent implements OnInit {
     { id: 5, label: 'Identity', icon: 'i-grid' }
   ];
 
+  isEditMode = false;
+  editStudentId: number | null = null;
+  private pendingClassName: string | null = null;
+  private pendingSectionName: string | null = null;
+
 
   constructor(
     private fb: FormBuilder,
     private studentService: StudentService,
     private router: Router,
     private location : Location,
-    private authService : AuthService
+    private authService : AuthService,
+    private route: ActivatedRoute
   ) {
     this.studentForm = this.fb.group({
       //Personal Details
@@ -66,8 +73,8 @@ export class StudentRegistrationComponent implements OnInit {
       country: ['India'], // default value
       state: ['',Validators.required],
       city: ['',Validators.required],
-      class: ['', Validators.required],
-      section: ['',Validators.required],
+      class: [null, Validators.required],
+      section: [null,Validators.required],
       dob: ['2017-09-10T07:05:58.883Z'],
       isDel :[0],
       isActive :[0],
@@ -76,11 +83,93 @@ export class StudentRegistrationComponent implements OnInit {
   }
   ngOnInit(){
     this.loadClasses();
+
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.isEditMode = true;
+      this.editStudentId = Number(idParam);
+
+      const navState = history.state as { student?: any } | undefined;
+      if (navState?.student) {
+        this.populateForm(navState.student);
+      } else {
+        this.studentService.getStudentById(this.editStudentId).subscribe({
+          next: (data) => this.populateForm(data),
+          error: (err) => console.error('Error loading student for edit', err)
+        });
+      }
+    }
   }
   loadClasses():void{
       this.studentService.getClass().subscribe((clas : Class[])=>{
       this.classes = clas;
+      if (this.pendingClassName) {
+        this.matchClassAndSection(this.pendingClassName, this.pendingSectionName);
+      }
     })
+  }
+
+  /** Pre-fills the form when editing an existing student. */
+  private populateForm(student: any): void {
+    this.studentForm.patchValue({
+      id: student.id,
+      firstName: student.firstName,
+      lastName: student.lastName,
+      fatherName: student.fatherName,
+      motherName: student.motherName,
+      gender: student.gender,
+      rollNo: student.rollNo,
+      email: student.email,
+      mobile: student.mobile,
+      address: student.address,
+      aadhar: student.aadhar,
+      country: student.country || 'India',
+      state: student.state,
+      city: student.city,
+      dob: student.dob,
+      isDel: student.isDel ?? 0,
+      isActive: student.isActive ?? 1,
+      sId: student.sId ?? 'S120'
+    });
+
+    if (student.photo) {
+      this.photoPreviewUrl = environment.domainUrl + student.photo;
+    }
+
+    // StudentView only exposes className/sectionName (text), not their numeric
+    // ids, so we resolve the matching Class/Section records by name once the
+    // classes list (and then the sections list) has loaded.
+    if (student.className) {
+      if (this.classes.length) {
+        this.matchClassAndSection(student.className, student.sectionName ?? null);
+      } else {
+        this.pendingClassName = student.className;
+        this.pendingSectionName = student.sectionName ?? null;
+      }
+    }
+  }
+
+  private matchClassAndSection(className: string, sectionName: string | null): void {
+    const matchedClass = this.classes.find(c => c.className === className);
+    if (!matchedClass) return;
+
+    this.studentForm.patchValue({ class: matchedClass.id });
+
+    this.studentService.getSectionsByClassId(matchedClass.id).subscribe({
+      next: (sections) => {
+        this.sections = sections;
+        if (sectionName) {
+          const matchedSection = sections.find(s => s.sectionName === sectionName);
+          if (matchedSection) {
+            this.studentForm.patchValue({ section: matchedSection.sectionId });
+          }
+        }
+      },
+      error: (err) => console.error('Error loading sections for edit', err)
+    });
+
+    this.pendingClassName = null;
+    this.pendingSectionName = null;
   }
   onClassChange(): void {
     const classId = this.studentForm.get('class')?.value;
@@ -176,13 +265,15 @@ isIdentityValid(): boolean {
   }
 
   onSubmit() {
-    debugger
     if (this.studentForm.valid) {
-      console.log(this.studentForm.value);
       const formData = new FormData();
 
-  // append fields
+  // append fields (skip 'photo' — that's the text control leftover from an
+  // old preview-binding; the real photo transfer happens via selectedFile
+  // below. Appending it as an empty string would overwrite the existing
+  // photo path on the server whenever no new file is chosen during edit.)
     Object.keys(this.studentForm.value).forEach(key => {
+     if (key === 'photo') return;
      if (this.studentForm.value[key] !== null && this.studentForm.value[key] !== undefined) {
       formData.append(key, this.studentForm.value[key]);
      }
@@ -193,12 +284,10 @@ isIdentityValid(): boolean {
       formData.append("photo", this.selectedFile, this.selectedFile.name);
     }
 
-      const newStudent : Student = this.studentForm.value;
       this.studentService.addStudent(formData).subscribe({
       next: (response) => {
         console.log("✅ API success:", response);
          this.router.navigate(['/students/list']);
-        // this.studentForm.reset();
       },
       error: (err) => {
         console.error("❌ API error:", err);

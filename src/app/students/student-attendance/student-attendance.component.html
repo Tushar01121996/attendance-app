@@ -1,26 +1,4 @@
 <div class="student-list-container">
-  <!-- Header -->
-  <div class="header-row">
-    <button class="icon-btn" (click)="goBack()" aria-label="Back">
-      <svg class="icon"><use href="#i-arrow-left"/></svg>
-    </button>
-    <h2 class="header-title">Mark Attendance</h2>
-    <div class="actions">
-      <button class="icon-btn" (click)="addNewStudent()" aria-label="Add Student">
-        <svg class="icon"><use href="#i-user-plus"/></svg>
-      </button>
-      <button class="icon-btn" (click)="gotoDashboard()" aria-label="Go To Dashboard">
-        <svg class="icon"><use href="#i-grid"/></svg>
-      </button>
-      <button class="icon-btn" (click)="submitAttendance()" aria-label="Submit Attendance">
-        <svg class="icon"><use href="#i-save"/></svg>
-      </button>
-      <button class="icon-btn" (click)="logout()" aria-label="Logout">
-        <svg class="icon"><use href="#i-log-out"/></svg>
-      </button>
-    </div>
-  </div>
-
   <!-- Filters Row -->
   <div class="filters-row">
     <!-- Date Picker -->
@@ -37,7 +15,7 @@
 
     <!-- Search -->
     <div class="search-bar flex-grow">
-      <svg class="icon"><use href="#i-search"/></svg>
+      <svg class="icon" viewBox="0 0 24 24"><use href="#i-search"/></svg>
       <input type="text" placeholder="Enter name, email..." (keyup)="applyFilter($event)" />
     </div>
   </div>
@@ -57,17 +35,22 @@
   <!-- Bulk Toggle -->
   <div class="bulk-toggle" *ngIf="!isHoliday">
     <button class="bulk-btn bulk-btn--present" (click)="setAllStatus(true)">
-      <svg class="icon"><use href="#i-check-circle"/></svg> Mark All Present
+      <svg class="icon" viewBox="0 0 24 24"><use href="#i-check-circle"/></svg> Mark All Present
     </button>
     <button class="bulk-btn bulk-btn--absent" (click)="setAllStatus(false)">
-      <svg class="icon"><use href="#i-x-circle"/></svg> Mark All Absent
+      <svg class="icon" viewBox="0 0 24 24"><use href="#i-x-circle"/></svg> Mark All Absent
     </button>
   </div>
+
+  <button class="btn-primary btn-save-attendance" *ngIf="!isHoliday" type="button" (click)="submitAttendance()">
+    <svg class="icon" viewBox="0 0 24 24"><use href="#i-save"/></svg>
+    Save Attendance
+  </button>
 
   <div *ngIf="isHoliday" class="holiday-wrapper">
     <div class="holiday-card">
       <div class="holiday-icon-circle">
-        <svg class="icon holiday-icon"><use href="#i-event"/></svg>
+        <svg class="icon holiday-icon" viewBox="0 0 24 24"><use href="#i-event"/></svg>
       </div>
       <div class="holiday-message">
         {{message}}

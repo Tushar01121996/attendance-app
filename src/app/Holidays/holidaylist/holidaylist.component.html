@@ -1,26 +1,4 @@
 <div class="student-list-container">
-  <div class="header-row">
-    <button class="icon-btn" (click)="goBack()" aria-label="Back">
-      <svg class="icon"><use href="#i-arrow-left"/></svg>
-    </button>
-    <h2 class="header-title">Holidays</h2>
-
-    <div class="actions">
-      <button class="icon-btn" (click)="addNewStudent()" aria-label="Add Student">
-        <svg class="icon"><use href="#i-user-plus"/></svg>
-      </button>
-      <button class="icon-btn" (click)="gotoDashboard()" aria-label="Go To Dashboard">
-        <svg class="icon"><use href="#i-grid"/></svg>
-      </button>
-      <button class="icon-btn" (click)="markAttendance()" aria-label="Mark Attendance">
-        <svg class="icon"><use href="#i-check-square"/></svg>
-      </button>
-      <button class="icon-btn" (click)="logout()" aria-label="Logout">
-        <svg class="icon"><use href="#i-log-out"/></svg>
-      </button>
-    </div>
-  </div>
-
   <!-- Month tabs -->
   <div class="year-tabs">
     <button
@@ -50,7 +28,7 @@
 
   <!-- Search -->
   <div class="search-bar">
-    <svg class="icon"><use href="#i-search"/></svg>
+    <svg class="icon" viewBox="0 0 24 24"><use href="#i-search"/></svg>
     <input type="text" placeholder="Search holidays..." (keyup)="applyFilter($event)" />
   </div>
 

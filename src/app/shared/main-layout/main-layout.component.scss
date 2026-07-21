@@ -1,0 +1,73 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(150deg, var(--et-primary-dark), var(--et-primary) 70%);
+  padding: 12px 14px;
+  box-shadow: 0 4px 14px -6px rgba(12,89,82,0.4);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  gap: 8px;
+}
+
+.header-title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 16.5px;
+  margin: 0;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  display: flex;
+  gap: 2px;
+  flex-wrap: nowrap;
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  &.active {
+    background: rgba(255,255,255,0.22);
+    color: #fff;
+  }
+
+  svg.icon { width: 18px; height: 18px; }
+}
+
+.app-content {
+  flex: 1;
+}
+
+@media (max-width: 420px) {
+  .icon-btn { width: 30px; height: 30px; }
+  .icon-btn svg.icon { width: 16px; height: 16px; }
+  .header-title { font-size: 14.5px; }
+}

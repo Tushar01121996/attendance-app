@@ -4,7 +4,7 @@
 
   <div class="auth-card">
     <div class="brand">
-      <div class="brand-icon"><svg class="icon"><use href="#i-check-square"/></svg></div>
+      <div class="brand-icon"><svg class="icon" viewBox="0 0 24 24"><use href="#i-check-square"/></svg></div>
       <div class="brand-name">EduTrack</div>
     </div>
 
@@ -16,7 +16,7 @@
       <div class="field">
         <label>Username</label>
         <div class="input-group">
-          <svg class="icon input-icon"><use href="#i-user"/></svg>
+          <svg class="icon input-icon" viewBox="0 0 24 24"><use href="#i-user"/></svg>
           <input
             type="text"
             formControlName="username"
@@ -34,7 +34,7 @@
       <div class="field">
         <label>Password</label>
         <div class="input-group">
-          <svg class="icon input-icon"><use href="#i-lock"/></svg>
+          <svg class="icon input-icon" viewBox="0 0 24 24"><use href="#i-lock"/></svg>
           <input
             [type]="hidePassword ? 'password' : 'text'"
             formControlName="password"
@@ -43,7 +43,7 @@
             [class.invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
           />
           <button type="button" class="toggle-visibility" (click)="hidePassword = !hidePassword" aria-label="Toggle password visibility">
-            <svg class="icon"><use [attr.href]="hidePassword ? '#i-eye' : '#i-eye-off'"/></svg>
+            <svg class="icon" viewBox="0 0 24 24"><use [attr.href]="hidePassword ? '#i-eye' : '#i-eye-off'"/></svg>
           </button>
         </div>
         <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
@@ -55,7 +55,7 @@
       <div class="options-row">
         <label class="checkbox-label">
           <input type="checkbox" formControlName="rememberMe" />
-          <span class="checkbox-box"><svg class="icon"><use href="#i-check-circle"/></svg></span>
+          <span class="checkbox-box"><svg class="icon" viewBox="0 0 24 24"><use href="#i-check-circle"/></svg></span>
           Keep me logged in
         </label>
         <a class="forgot-link" (click)="forgotPassword()">Forgot password?</a>

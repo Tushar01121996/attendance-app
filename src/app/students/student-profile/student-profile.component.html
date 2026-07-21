@@ -2,21 +2,6 @@
 
   <!-- Cover -->
   <div class="cover">
-    <div class="cover-topbar">
-      <button class="icon-btn" (click)="goBack()" aria-label="Back">
-        <svg class="icon"><use href="#i-arrow-left"/></svg>
-      </button>
-      <div class="cover-title">Student Profile</div>
-      <div class="cover-actions">
-        <button class="icon-btn" (click)="gotoDashboard()" aria-label="Dashboard">
-          <svg class="icon"><use href="#i-grid"/></svg>
-        </button>
-        <button class="icon-btn" (click)="logout()" aria-label="Logout">
-          <svg class="icon"><use href="#i-log-out"/></svg>
-        </button>
-      </div>
-    </div>
-
     <div class="avatar-block">
       <div class="profile-avatar">
         <img *ngIf="student.photo" [src]="environment.domainUrl + student.photo" alt="{{ student.firstName }} photo" loading="lazy" />
@@ -52,16 +37,16 @@
     <!-- Quick actions -->
     <div class="action-row">
       <a class="action-btn" [href]="student.mobile ? 'tel:' + student.mobile : null">
-        <svg class="icon"><use href="#i-phone"/></svg><span>Call</span>
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-phone"/></svg><span>Call</span>
       </a>
       <a class="action-btn" [href]="student.email ? 'mailto:' + student.email : null">
-        <svg class="icon"><use href="#i-mail"/></svg><span>Email</span>
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-mail"/></svg><span>Email</span>
       </a>
       <button class="action-btn" type="button" (click)="markAttendance()">
-        <svg class="icon"><use href="#i-check-square"/></svg><span>Attendance</span>
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-check-square"/></svg><span>Attendance</span>
       </button>
       <button class="action-btn" type="button" (click)="editStudent()">
-        <svg class="icon"><use href="#i-edit"/></svg><span>Edit</span>
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-edit"/></svg><span>Edit</span>
       </button>
     </div>
 
@@ -69,15 +54,15 @@
     <div class="section-header"><h3>Personal Information</h3></div>
     <div class="info-card">
       <div class="info-row" *ngIf="student.dob">
-        <div class="info-icon"><svg class="icon"><use href="#i-calendar"/></svg></div>
+        <div class="info-icon"><svg class="icon" viewBox="0 0 24 24"><use href="#i-calendar"/></svg></div>
         <div class="info-mid"><div class="info-label">Date of Birth</div><div class="info-value">{{ student.dob | date:'d MMM y' }}</div></div>
       </div>
       <div class="info-row" *ngIf="student.fatherName">
-        <div class="info-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+        <div class="info-icon"><svg class="icon" viewBox="0 0 24 24"><use href="#i-users"/></svg></div>
         <div class="info-mid"><div class="info-label">Father's Name</div><div class="info-value">{{ student.fatherName }}</div></div>
       </div>
       <div class="info-row" *ngIf="student.motherName">
-        <div class="info-icon"><svg class="icon"><use href="#i-users"/></svg></div>
+        <div class="info-icon"><svg class="icon" viewBox="0 0 24 24"><use href="#i-users"/></svg></div>
         <div class="info-mid"><div class="info-label">Mother's Name</div><div class="info-value">{{ student.motherName }}</div></div>
       </div>
     </div>
@@ -86,11 +71,11 @@
     <div class="section-header"><h3>Contact Information</h3></div>
     <div class="info-card">
       <div class="info-row" *ngIf="student.email">
-        <div class="info-icon"><svg class="icon"><use href="#i-mail"/></svg></div>
+        <div class="info-icon"><svg class="icon" viewBox="0 0 24 24"><use href="#i-mail"/></svg></div>
         <div class="info-mid"><div class="info-label">Email</div><div class="info-value">{{ student.email }}</div></div>
       </div>
       <div class="info-row" *ngIf="student.mobile">
-        <div class="info-icon"><svg class="icon"><use href="#i-phone"/></svg></div>
+        <div class="info-icon"><svg class="icon" viewBox="0 0 24 24"><use href="#i-phone"/></svg></div>
         <div class="info-mid"><div class="info-label">Mobile</div><div class="info-value">{{ student.mobile }}</div></div>
       </div>
     </div>
@@ -99,7 +84,7 @@
     <div class="section-header"><h3>Address</h3></div>
     <div class="info-card">
       <div class="info-row">
-        <div class="info-icon"><svg class="icon"><use href="#i-map-pin"/></svg></div>
+        <div class="info-icon"><svg class="icon" viewBox="0 0 24 24"><use href="#i-map-pin"/></svg></div>
         <div class="info-mid">
           <div class="info-label">Residential Address</div>
           <div class="info-value">
@@ -130,7 +115,7 @@
   </div>
 
   <button class="edit-fab" type="button" (click)="editStudent()" aria-label="Edit student">
-    <svg class="icon"><use href="#i-edit"/></svg>
+    <svg class="icon" viewBox="0 0 24 24"><use href="#i-edit"/></svg>
   </button>
 </div>
 

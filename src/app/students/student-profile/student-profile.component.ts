@@ -135,7 +135,7 @@ export class StudentProfileComponent implements OnInit {
 
   editStudent(): void {
     if (this.student) {
-      this.router.navigate(['/students/register'], { state: { student: this.student } });
+      this.router.navigate(['/students/edit', this.student.id], { state: { student: this.student } });
     }
   }
 

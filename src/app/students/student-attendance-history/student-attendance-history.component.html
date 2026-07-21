@@ -1,27 +1,18 @@
 <div class="page-shell">
 
-  <!-- Header -->
-  <div class="header-row">
-    <button class="icon-btn" (click)="goBack()" aria-label="Back">
-      <svg class="icon"><use href="#i-arrow-left"/></svg>
-    </button>
-    <div class="header-mid">
-      <h2 class="header-title">Attendance History</h2>
-      <div class="header-sub" *ngIf="studentName">{{ studentName }}</div>
-    </div>
-    <button class="icon-btn" (click)="logout()" aria-label="Logout">
-      <svg class="icon"><use href="#i-log-out"/></svg>
-    </button>
+  <!-- Page context -->
+  <div class="page-context" *ngIf="studentName">
+    <span>{{ studentName }}</span>
   </div>
 
   <!-- Month filter -->
   <div class="month-filter">
     <button class="icon-btn" (click)="prevMonth()" aria-label="Previous month">
-      <svg class="icon"><use href="#i-chevron-left"/></svg>
+      <svg class="icon" viewBox="0 0 24 24"><use href="#i-chevron-left"/></svg>
     </button>
     <div class="month-label">{{ monthLabel }}</div>
     <button class="icon-btn" (click)="nextMonth()" [disabled]="isCurrentMonth" aria-label="Next month">
-      <svg class="icon"><use href="#i-chevron-right"/></svg>
+      <svg class="icon" viewBox="0 0 24 24"><use href="#i-chevron-right"/></svg>
     </button>
   </div>
 
