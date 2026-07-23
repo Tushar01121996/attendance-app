@@ -90,6 +90,35 @@ export class StudentService {
         })
       );
   }
+    /**
+   * GET {apiUrl}/Student/GetAttendanceInsight/{studentId}?presentCount=&absentCount=&totalSchoolDays=
+   * Returns an AI-generated 1-2 sentence attendance summary (cached server-side,
+   * regenerated once per day). The counts are computed on the frontend
+   * (excluding Sundays/holidays) and passed through so the AI's narrative
+   * always matches the numbers actually shown on screen, instead of the
+   * backend recomputing its own — possibly different — version.
+   * Never blocks the page — caller should treat a failure as "no insight available."
+   */
+  getAttendanceInsight(
+    studentId: number,
+    presentCount: number,
+    absentCount: number,
+    totalSchoolDays: number
+  ): Observable<{ insight: string }> {
+    const params = {
+      presentCount: presentCount.toString(),
+      absentCount: absentCount.toString(),
+      totalSchoolDays: totalSchoolDays.toString()
+    };
+    return this.httpClient
+      .get<{ insight: string }>(this.apiUrl + "GetAttendanceInsight/" + studentId, { params })
+      .pipe(
+        catchError((error) => {
+          console.log(error.error?.error);
+          return throwError(() => new Error(error.error?.error || 'Error'));
+        })
+      );
+  }
 }
 export interface AttendanceHistoryDto {
   date: string;   // ISO date string, e.g. '2026-07-16'

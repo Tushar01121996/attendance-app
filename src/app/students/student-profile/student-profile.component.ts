@@ -5,6 +5,8 @@ import { StudentService,AttendanceHistoryDto } from '../student.service';
 import { StudentView } from '../model/student';
 import { environment } from '../../../environment/environment';
 import { AuthService } from '../../auth/auth.service';
+import { DashboardServiceService } from '../../dashboard/dashboard-service.service';
+import { holiday } from '../../dashboard/model/AggregateStudentView';
 
 interface AttendanceEntry {
   date: Date;
@@ -27,12 +29,21 @@ export class StudentProfileComponent implements OnInit {
   totalAttendance: AttendanceEntry[] = [];
   attendanceLoading = true;
 
+  aiInsight: string | null = null;
+  aiInsightLoading = true;
+
+  /** Active holiday dates (as 'yyyy-MM-dd' strings) — used to exclude
+   *  holidays and Sundays from the attendance percentage denominator. */
+  private holidayDateSet = new Set<string>();
+  private holidaysLoaded = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
     private studentService: StudentService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dashboardService: DashboardServiceService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +55,7 @@ export class StudentProfileComponent implements OnInit {
     if (navState?.student) {
       this.student = navState.student;
       this.loading = false;
-      this.loadAttendanceHistory(navState.student.id);
+      this.loadHolidaysThenAttendance(navState.student.id);
       return;
     }
 
@@ -55,6 +66,7 @@ export class StudentProfileComponent implements OnInit {
     if (id === null) {
       this.loading = false;
       this.attendanceLoading = false;
+      this.aiInsightLoading = false;
       return;
     }
 
@@ -62,14 +74,51 @@ export class StudentProfileComponent implements OnInit {
       next: (data) => {
         this.student = data;
         this.loading = false;
-        this.loadAttendanceHistory(id);
+        this.loadHolidaysThenAttendance(id);
       },
       error: (err) => {
         console.error('Error loading student profile', err);
         this.loading = false;
         this.attendanceLoading = false;
+        this.aiInsightLoading = false;
       }
     });
+  }
+
+  /** Loads the active holiday list first (needed to correctly compute the
+   *  attendance percentage), then loads attendance data and the AI insight —
+   *  both of which depend on knowing which dates are non-school days. */
+  private loadHolidaysThenAttendance(studentId: number): void {
+    this.dashboardService.getHolidayList().subscribe({
+      next: (holidays: holiday[]) => {
+        this.holidayDateSet = new Set(
+          holidays
+            .filter(h => h.isActive)
+            .map(h => this.toDateKey(new Date(h.holidayDate)))
+        );
+        this.holidaysLoaded = true;
+        this.loadAttendanceHistory(studentId);
+      },
+      error: (err) => {
+        console.error('Error loading holidays', err);
+        // Don't block attendance on a holiday-fetch failure — just proceed
+        // without holiday exclusion (Sundays are still excluded either way).
+        this.holidaysLoaded = true;
+        this.loadAttendanceHistory(studentId);
+      }
+    });
+  }
+
+  private toDateKey(date: Date): string {
+    return date.toISOString().slice(0, 10); // 'yyyy-MM-dd'
+  }
+
+  /** A day counts toward the attendance percentage only if it isn't a
+   *  Sunday and isn't an active holiday. */
+  private isSchoolDay(date: Date): boolean {
+    if (date.getDay() === 0) return false; // Sunday
+    if (this.holidayDateSet.has(this.toDateKey(date))) return false;
+    return true;
   }
 
   private loadAttendanceHistory(studentId: number): void {
@@ -81,33 +130,64 @@ export class StudentProfileComponent implements OnInit {
             date: new Date(row.date),
             status: row.status
           }));
-          
+
           // newest first, then cap at 5 — guards against the backend
           // ignoring the `take` param and returning the full history
           this.recentAttendance = this.totalAttendance.sort((a, b) => b.date.getTime() - a.date.getTime())
           .slice(0, 5);
         this.attendanceLoading = false;
+
+        // Load the AI insight only once the real, holiday/Sunday-adjusted
+        // counts are known, so the narrative can't disagree with the card.
+        this.loadAiInsight(studentId);
       },
       error: (err) => {
         console.error('Error loading attendance history', err);
         this.recentAttendance = [];
         this.attendanceLoading = false;
+        this.aiInsightLoading = false;
       }
     });
   }
 
+  /** School days so far in the tracked range — excludes Sundays and active
+   *  holidays. This is the correct denominator for attendance percentage. */
+  get schoolDayEntries(): AttendanceEntry[] {
+    return this.totalAttendance.filter(a => this.isSchoolDay(a.date));
+  }
+
   get attendancePercentage(): number {
-    if (!this.totalAttendance.length) return 0;
-    const presentCount = this.totalAttendance.filter(a => a.status === 'Present').length;
-    return Math.round((presentCount / this.totalAttendance.length) * 100);
+    const schoolDays = this.schoolDayEntries;
+    if (!schoolDays.length) return 0;
+    const present = schoolDays.filter(a => a.status === 'Present').length;
+    return Math.round((present / schoolDays.length) * 100);
   }
 
   get presentCount(): number {
-    return this.totalAttendance.filter(a => a.status === 'Present').length;
+    return this.schoolDayEntries.filter(a => a.status === 'Present').length;
   }
 
   get absentCount(): number {
-    return this.totalAttendance.filter(a => a.status === 'Absent').length;
+    return this.schoolDayEntries.filter(a => a.status === 'Absent').length;
+  }
+
+  /** AI-generated attendance summary — enhancement only, never blocks the page.
+   *  Passes the already-computed, holiday/Sunday-adjusted counts so the
+   *  backend narrative always matches what's shown on screen. */
+  private loadAiInsight(studentId: number): void {
+    this.aiInsightLoading = true;
+    const schoolDays = this.schoolDayEntries.length;
+    this.studentService.getAttendanceInsight(studentId, this.presentCount, this.absentCount, schoolDays).subscribe({
+      next: (res) => {
+        this.aiInsight = res.insight;
+        this.aiInsightLoading = false;
+      },
+      error: () => {
+        // Silent failure by design — the insight card just doesn't render.
+        this.aiInsight = null;
+        this.aiInsightLoading = false;
+      }
+    });
   }
    viewAllAttendance(): void {
     if (this.student) {

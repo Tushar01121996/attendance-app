@@ -168,6 +168,45 @@
   span { font-size: 10px; font-weight: 700; color: var(--et-ink); }
 }
 
+.ai-insight-card {
+  background: linear-gradient(150deg, var(--et-primary-light), var(--et-mint-50));
+  border: 1px solid var(--et-primary-light);
+  border-radius: var(--et-radius-md);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+.ai-insight-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 6px;
+
+  svg.icon {
+    width: 15px;
+    height: 15px;
+    color: var(--et-primary);
+  }
+  span {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--et-primary-dark);
+  }
+}
+.ai-insight-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--et-ink-soft);
+  margin: 0;
+}
+.ai-insight-loading {
+  font-size: 12.5px;
+  color: var(--et-ink-muted);
+  font-style: italic;
+  margin: 0;
+}
+
 .section-header {
   display: flex;
   align-items: center;

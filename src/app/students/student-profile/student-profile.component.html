@@ -50,6 +50,16 @@
       </button>
     </div>
 
+    <!-- AI Insight -->
+    <div class="ai-insight-card" *ngIf="aiInsightLoading || aiInsight">
+      <div class="ai-insight-head">
+        <svg class="icon" viewBox="0 0 24 24"><use href="#i-star"/></svg>
+        <span>AI Insight</span>
+      </div>
+      <p *ngIf="aiInsightLoading" class="ai-insight-loading">Analyzing attendance pattern...</p>
+      <p *ngIf="!aiInsightLoading && aiInsight" class="ai-insight-text">{{ aiInsight }}</p>
+    </div>
+
     <!-- Personal info -->
     <div class="section-header"><h3>Personal Information</h3></div>
     <div class="info-card">
