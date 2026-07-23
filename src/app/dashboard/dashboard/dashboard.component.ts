@@ -1,11 +1,14 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { DashboardServiceService } from '../dashboard-service.service';
 import { topPerformingStudents } from '../model/AggregateStudentView';
+import { StudentService, AbsenceAlertDto } from '../../students/student.service';
+import { environment } from '../../../environment/environment';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -18,11 +21,13 @@ imports: [
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
-  
   teacherName = localStorage.getItem('displayName')?.split(' ')[0];
   today = new Date();
   dataSource = new MatTableDataSource<topPerformingStudents>();
-  constructor (private dashboardService : DashboardServiceService){}
+  constructor (private dashboardService : DashboardServiceService, private studentService: StudentService, private router: Router){}
+  environment = environment;
+  absenceAlerts: AbsenceAlertDto[] = [];
+  absenceAlertsLoading = true;
   // summary metrics (replace with real data later)
   attendanceSummary = [
     { key: 'TotalStudents', label: 'Total Students', value: 0, color: '#4E8FE0' },
@@ -46,6 +51,17 @@ export class DashboardComponent implements OnInit {
    this.dashboardService.getTopPerformingStudents().subscribe((topPerformingStudents : topPerformingStudents[]) => {
         this.dataSource.data = topPerformingStudents;
      });
+
+   this.studentService.getAbsenceAlerts(1).subscribe({
+     next: (alerts) => {
+       this.absenceAlerts = alerts;
+       this.absenceAlertsLoading = false;
+     },
+     error: (err) => {
+       console.error('Error loading absence alerts', err);
+       this.absenceAlertsLoading = false;
+     }
+   });
   }
 
   // recent requests (demo)
@@ -97,4 +113,8 @@ export class DashboardComponent implements OnInit {
       };
     });
   }
+
+  viewAlertProfile(alert: AbsenceAlertDto): void {
+    this.router.navigate(['/students', alert.studentId]);
+  } 
 }

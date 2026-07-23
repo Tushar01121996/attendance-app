@@ -119,6 +119,38 @@ export class StudentService {
         })
       );
   }
+   /**
+   * GET {apiUrl}/Student/GetAbsenceStreaks
+   * Returns the current consecutive-absence streak (Sundays/holidays excluded)
+   * for every student in the logged-in teacher's homeroom class. Only
+   * students with an active streak (> 0) are included.
+   */
+  getAbsenceStreaks(): Observable<AbsenceStreakDto[]> {
+    return this.httpClient
+      .get<AbsenceStreakDto[]>(this.apiUrl + "GetAbsenceStreaks")
+      .pipe(
+        catchError((error) => {
+          console.log(error.error?.error);
+          return throwError(() => new Error(error.error?.error || 'Error'));
+        })
+      );
+  }
+
+  /**
+   * GET {apiUrl}/Student/GetAbsenceAlerts/{threshold}
+   * School-wide list of students currently on a consecutive-absence streak
+   * at or above the given threshold, sorted worst-first, capped at 10.
+   */
+  getAbsenceAlerts(threshold: number = 2): Observable<AbsenceAlertDto[]> {
+    return this.httpClient
+      .get<AbsenceAlertDto[]>(this.apiUrl + "GetAbsenceAlerts/" + threshold)
+      .pipe(
+        catchError((error) => {
+          console.log(error.error?.error);
+          return throwError(() => new Error(error.error?.error || 'Error'));
+        })
+      );
+  }
 }
 export interface AttendanceHistoryDto {
   date: string;   // ISO date string, e.g. '2026-07-16'
@@ -129,5 +161,20 @@ export interface StudentAttendanceView {
   name: string;
   date: string;   // ISO date string
   status: string; // 'Present' | 'Absent' | 'Not Marked'
+}
+
+export interface AbsenceStreakDto {
+  studentId: number;
+  streakCount: number;
+}
+
+export interface AbsenceAlertDto {
+  studentId: number;
+  firstName: string;
+  lastName: string;
+  className: string;
+  sectionName: string;
+  photo: string;
+  streakCount: number;
 }
 

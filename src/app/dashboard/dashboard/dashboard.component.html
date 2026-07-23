@@ -81,6 +81,27 @@
     </a>
   </div>
 
+  <!-- Attendance Alerts -->
+  <div class="section-header" *ngIf="!absenceAlertsLoading && absenceAlerts.length">
+    <h3>⚠️ Attendance Alerts</h3>
+  </div>
+
+  <div class="req-list" *ngIf="!absenceAlertsLoading && absenceAlerts.length">
+    <div class="req-item alert-item" *ngFor="let alert of absenceAlerts" (click)="viewAlertProfile(alert)">
+      <span class="avatar-ring absent">
+        <div class="req-avatar req-avatar--initials" *ngIf="!alert.photo">
+          {{ alert.firstName?.[0] }}{{ alert.lastName?.[0] }}
+        </div>
+        <img class="req-avatar" *ngIf="alert.photo" [src]="environment.domainUrl + alert.photo" alt="{{alert.firstName}} avatar" loading="lazy" />
+      </span>
+      <div class="req-mid">
+        <div class="req-name">{{ alert.firstName }} {{ alert.lastName }}</div>
+        <div class="req-date">{{ alert.className }} {{ alert.sectionName }}</div>
+      </div>
+      <span class="req-status absent">{{ alert.streakCount }} days absent</span>
+    </div>
+  </div>
+
   <!-- Recent requests list -->
   <div class="section-header">
     <h3>Recent Activity</h3>

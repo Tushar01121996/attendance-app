@@ -109,10 +109,23 @@
 /* Ring + avatar */
 .avatar-ring {
   flex-shrink: 0;
+  position: relative;
   display: inline-flex;
   padding: 2.5px;
   border-radius: 50%;
   background: var(--et-primary);
+}
+
+.streak-dot {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--et-danger);
+  border: 2px solid var(--et-surface);
+  z-index: 1;
 }
 
 .avatar {
@@ -141,10 +154,23 @@
   min-width: 0;
 
   .name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-weight: 700;
     font-size: 14.5px;
     color: var(--et-ink);
     margin-bottom: 2px;
+  }
+
+  .streak-chip {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--et-danger);
+    background: var(--et-danger-bg);
+    padding: 2px 7px;
+    border-radius: 99px;
+    white-space: nowrap;
   }
 
   .details {

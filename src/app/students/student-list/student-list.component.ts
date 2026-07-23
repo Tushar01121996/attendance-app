@@ -20,6 +20,10 @@ export class StudentListComponent {
   displayedColumns: string[] = ['avatar', 'name', 'gender', 'class'];
   dataSource = new MatTableDataSource<StudentView>();
 
+  /** studentId -> consecutive absence streak (only entries with a streak > 0 are present) */
+  absenceStreaks = new Map<number, number>();
+  readonly absenceStreakThreshold = 2;
+
   constructor(private studentService: StudentService, private location : Location, private router:Router,
     private authService : AuthService
   ) {}
@@ -29,6 +33,20 @@ export class StudentListComponent {
    this.studentService.getStudents().subscribe((students : StudentView[]) => {
       this.dataSource.data =students;
    });
+
+   this.studentService.getAbsenceStreaks().subscribe({
+     next: (streaks) => {
+       this.absenceStreaks = new Map(streaks.map(s => [s.studentId, s.streakCount]));
+     },
+     error: (err) => {
+       // Non-critical — the list still works fine without streak badges.
+       console.error('Error loading absence streaks', err);
+     }
+   });
+  }
+
+  getStreak(studentId: number): number {
+    return this.absenceStreaks.get(studentId) ?? 0;
   }
   environment = environment;
   applyFilter(event: Event) {

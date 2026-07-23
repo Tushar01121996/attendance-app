@@ -20,11 +20,17 @@
             {{ student.firstName?.[0] | uppercase }}
           </span>
         </div>
+        <span class="streak-dot" *ngIf="getStreak(student.id) >= absenceStreakThreshold" [title]="getStreak(student.id) + ' day absence streak'"></span>
       </span>
 
       <!-- Info -->
       <div class="student-info">
-        <div class="name">{{ student.firstName }} {{ student.lastName }}</div>
+        <div class="name">
+          {{ student.firstName }} {{ student.lastName }}
+          <span class="streak-chip" *ngIf="getStreak(student.id) >= absenceStreakThreshold">
+            {{ getStreak(student.id) }}d streak
+          </span>
+        </div>
         <div class="details">
           {{ student.email }} • {{ student.mobile }}
         </div>
